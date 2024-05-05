@@ -12,6 +12,7 @@ use App\Http\Controllers\RepresentationController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StripeWebhookController;
+use App\Http\Controllers\AdminController;
 
 
 
@@ -29,6 +30,17 @@ use App\Http\Controllers\StripeWebhookController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+|
+| Here are the routes for the Admin resource.
+|
+*/
+
+Route::get('/admin', [AdminController::class, 'dashboard']);
 
 /*
 |--------------------------------------------------------------------------
