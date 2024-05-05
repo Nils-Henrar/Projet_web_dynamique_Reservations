@@ -40,7 +40,11 @@ Route::get('/', function () {
 |
 */
 
-Route::get('/admin', [AdminController::class, 'dashboard']);
+Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+Route::get('/artist', [ArtistController::class, 'index'])->name('artist.index');
+
+Route::get('/admin/artist/{id}', [AdminController::class, 'showArtist'])->name('admin.showartist');
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +55,7 @@ Route::get('/admin', [AdminController::class, 'dashboard']);
 |
 */
 
-Route::get('/artist', [ArtistController::class, 'index'])->name('artist.index');
+
 
 Route::get('/artist/create', [ArtistController::class, 'create'])->name('artist.create');
 

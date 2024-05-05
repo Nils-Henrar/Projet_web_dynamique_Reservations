@@ -18,14 +18,40 @@ class ArtistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // 
-        $artists = Artist::all(); // ou Db::select('select * from artists'); Db::table('artists')->get();
-        return view('artist.index', [
-            'artists' => $artists,
-            'resource' => 'artistes'
-        ]);
+        $search = $request->input('search');
+        $order = $request->input('order'); 
+    
+        // Recherche
+        $artistsQuery = Artist::query();
+    
+        if ($search) {
+            $artistsQuery->where('firstname', 'like', '%' . $search . '%')
+                         ->orWhere('lastname', 'like', '%' . $search . '%');
+        }
+    
+        // Tri
+        if ($order) {
+            switch ($order) {
+                case 'firstname_asc':
+                    $artistsQuery->orderBy('firstname', 'asc');
+                    break;
+                case 'firstname_desc':
+                    $artistsQuery->orderBy('firstname', 'desc');
+                    break;
+                case 'lastname_asc':
+                    $artistsQuery->orderBy('lastname', 'asc');
+                    break;
+                case 'lastname_desc':
+                    $artistsQuery->orderBy('lastname', 'desc');
+                    break;
+            }
+        }
+    
+        $artists = $artistsQuery->get();
+    
+        return view('artist.index', compact('artists'));
     }
 
     /**

@@ -1,34 +1,91 @@
-@extends ('layouts.main')
+@extends('adminlte::page')
 
-@section ('title', 'Liste des artistes')
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Dashboard</h1>
+@stop
 
 @section ('content')
 
+<div class="container">
 
-<div class="flex items-center justify-between mt-4">
-    <h1 class="text-2xl text-pink-500">Les artistes</h1>
-    <a href="{{ route('artist.create') }}" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-1 px-3 rounded">Ajouter un artiste</a>
-</div>
-<ul class="flex flex-wrap mt-4">
-    @foreach ($artists as $artist)
-    <li class="w-1/3 p-2 text-gray-700"><a href="{{ route('artist.show', $artist->id) }}" class="hover:text-pink-500"> {{ $artist->firstname }} {{ $artist->lastname }}
-            <!-- les types de l'artiste -->
-            (
-            @foreach ($artist->types as $type)
-            <span class="text-xs bg">{{ $type->type }}</span>
-            @if (!$loop->last)
-            /
+    <div class="row">
+        <p>Gestion des artistes.</p>
+    </div>
+    <div class="row justify-content-end mb-5">
+        <a href="{{ route('artist.create') }}" class="btn btn-primary">Ajouter un nouvel artiste</a>
+    </div>
+
+
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-10">
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <!-- Formulaire de recherche -->
+                <form method="GET" action="{{ route('artist.index') }}" class="form-inline">
+                    <input type="text" name="search" placeholder="Rechercher un artiste..." class="form-control mr-2" value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </form>
+            </div>
+            <div class="col-md-3">
+                <form method="GET" action="{{ route('artist.index') }}" class="form-inline">
+                    <!-- <label for="order">Trier par: </label> -->
+                    <select name="order" class="form-control ml-2" onchange="this.form.submit()">
+                        <option value="" disabled selected>Choisir un critère de tri</option>
+                        <option value="firstname_asc" {{ request('order') == 'firstname_asc' ? 'selected' : '' }}>Prénom (A-Z)</option>
+                        <option value="firstname_desc" {{ request('order') == 'firstname_desc' ? 'selected' : '' }}>Prénom (Z-A)</option>
+                        <option value="lastname_asc" {{ request('order') == 'lastname_asc' ? 'selected' : '' }}>Nom (A-Z)</option>
+                        <option value="lastname_desc" {{ request('order') == 'lastname_desc' ? 'selected' : '' }}>Nom (Z-A)</option>
+                    </select>
+                </form>
+            </div>
+            <div class="col-md-3">
+                <a href="{{ route('artist.index') }}" class="btn btn-primary">réinitialiser</a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            @if ($artists->isEmpty())
+                <p class="text-center">Aucun résultat trouvé.</p>
             @else
-            )
+            <table class="table table-striped border">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th class="col-md-4">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($artists as $artist)
+                    <tr>
+                        <td>{{ $artist->id }}</td>
+                        <td>{{ $artist->firstname }}</td>
+                        <td>{{ $artist->lastname }}</td>
+                        <td>
+                            <a href="{{ route('admin.showartist', $artist->id ) }}" class="btn btn-primary mr-1">show</a>
+                            <a href="{{ route('artist.edit', $artist->id ) }}" class="btn btn-info mr-1">edit</a>
+                            <a href="{{ route('admin.showartist', $artist->id ) }}" class="btn btn-danger">delete</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
             @endif
-            @endforeach
-        </a>
-    </li>
+    	    </div>
+        </div>
+    </div>
+</div>
 
-    @endforeach
-</ul>
+@stop
 
+@section('css')
+    {{-- Add here extra stylesheets --}}
+    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+@stop
 
-
-
-@endsection
+@section('js')
+    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+@stop
