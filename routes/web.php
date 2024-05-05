@@ -46,6 +46,18 @@ Route::get('/artist', [ArtistController::class, 'index'])->name('artist.index');
 
 Route::get('/admin/artist/{id}', [AdminController::class, 'showArtist'])->name('admin.showartist');
 
+Route::get('/admin/show', [AdminController::class, 'getShow'])->name('admin.show');
+
+Route::get('/admin/show/{id}', [AdminController::class, 'getShowId'])->name('admin.showid');
+
+Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
+
+Route::post('/show', [ShowController::class, 'store'])->name('show.store');
+
+Route::get('/show/{id}/edit', [ShowController::class, 'edit'])->where('id', '[0-9]+')->name('show.edit');
+
+Route::delete('/show/{id}', [ShowController::class, 'delete'])->where('id', '[0-9]+')->name('show.delete');
+
 /*
 |--------------------------------------------------------------------------
 | Artist Routes
@@ -180,17 +192,16 @@ Route::delete('/representation/{id}', [RepresentationController::class, 'delete'
 
 Route::get('/show', [ShowController::class, 'index'])->name('show.index');
 
-Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
-
-Route::post('/show', [ShowController::class, 'store'])->name('show.store');
-
 Route::get('/show/{id}', [ShowController::class, 'show'])->where('id', '[0-9]+')->name('show.show');
 
-Route::get('/show/{id}/edit', [ShowController::class, 'edit'])->where('id', '[0-9]+')->name('show.edit');
+
+
+
+
 
 Route::put('/show/{id}', [ShowController::class, 'update'])->where('id', '[0-9]+')->name('show.update');
 
-Route::delete('/show/{id}', [ShowController::class, 'delete'])->where('id', '[0-9]+')->name('show.delete');
+
 
 
 

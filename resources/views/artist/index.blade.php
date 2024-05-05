@@ -20,7 +20,7 @@
 
 
     <div class="row mt-4 justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
         <div class="row mb-4">
             <div class="col-md-5">
                 <!-- Formulaire de recherche -->

@@ -66,10 +66,9 @@ class ShowController extends Controller
      */
     public function create()
     {
-            //
-        ;
+        $artists = Artist::all();
 
-        return view('show.create', []);
+        return view('show.create', ['artists' => $artists]);
     }
 
     /**
@@ -110,8 +109,11 @@ class ShowController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
-        //
+    {   
+        $show = Show::find($id);
+        $artists = Artist::all();
+
+        return view('show.edit', ['show' => $show, 'artists' => $artists]);
     }
 
     /**
