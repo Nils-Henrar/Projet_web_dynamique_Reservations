@@ -1,6 +1,10 @@
-@extends ('layouts.main')
+@extends('adminlte::page')
 
-@section ('title', 'Fiche d\'une représentation')
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Représentations</h1>
+@stop
 
 @section ('content')
 
@@ -21,6 +25,12 @@
 
 </article>
 
-<nav class="mt-4"><a href="{{ route('representation.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Retour</a></nav>
+<nav class="mt-4"><a href="{{ route('representation.index') }}" class="btn btn-primary">Retour</a></nav>
 
-@endsection
+@stop 
+
+@section('css')
+@stop
+
+@section('js')
+@stop
