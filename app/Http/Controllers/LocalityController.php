@@ -39,10 +39,21 @@ class LocalityController extends Controller
     {
         //
 
-        $locality = new Locality();
-        $locality->postal_code = $request->postal_code;
-        $locality->locality = $request->locality;
-        $locality->save();
+        // Valider les données du formulaire
+        $validatedData = $request->validate([
+            'postal_code' => 'required|string|max:10',  // Le code postal est requis
+            'locality' => 'required|string|max:255',  // Le nom de la localité est requis
+        ]);
+
+        // Créer une nouvelle localité avec les données validées
+        $locality = new Locality;
+        $locality->postal_code = $validatedData['postal_code'];
+        $locality->locality = $validatedData['locality'];
+
+        $locality->save();  // Enregistrer dans la base de données
+        
+        // Rediriger après succès avec un message de succès
+        return redirect()->route('locality.index')->with('success', 'Localité créée avec succès');
     }
 
     /**
@@ -71,7 +82,9 @@ class LocalityController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $locality = Locality::find($id);
+
+        return view('locality.edit', ['locality' => $locality]);
     }
 
     /**
@@ -79,14 +92,38 @@ class LocalityController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            // Valider les données du formulaire
+            $validatedData = $request->validate([
+                'postal_code' => 'required|string|max:10',  // Code postal requis et limité
+                'locality' => 'required|string|max:255',  // Nom de la localité requis
+            ]);
+
+            // Trouver la localité par son ID
+            $locality = Locality::findOrFail($id);  // Exception si l'ID n'existe pas
+            
+            // Mettre à jour les valeurs
+            $locality->postal_code = $validatedData['postal_code'];
+            $locality->locality = $validatedData['locality'];
+
+            $locality->save();  // Enregistrer les modifications
+            
+            return redirect()->route('locality.index')->with('success', 'Localité mise à jour avec succès');
+        } catch (ValidationException $e) {
+            // Si la validation échoue, retourner avec les erreurs et les anciennes valeurs
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
-        //
+        $locality = Locality::findOrFail($id);
+        
+        $locality->delete();
+
+        return redirect()->route('locality.index')->with('success', 'Localité supprimée avec succès');
     }
 }

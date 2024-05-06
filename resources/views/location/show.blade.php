@@ -1,6 +1,10 @@
-@extends ('layouts.main')
+@extends('adminlte::page')
 
-@section ('title', 'Fiche d\'un lieu')
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Locations</h1>
+@stop
 
 @section ('content')
 
@@ -39,8 +43,14 @@
 </ul>
 
 <div class="mt-4">
-    <a href="{{ route('location.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Retour</a>
-    <a href="{{ route('location.edit', $location->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Modifier</a>
+    <a href="{{ route('location.index') }}" class="btn btn-primary">Retour</a>
+    <a href="{{ route('location.edit', $location->id) }}" class="btn btn-info">Modifier</a>
 </div>
 
-@endsection
+@stop
+
+@section('css')
+@stop
+
+@section('js')
+@stop

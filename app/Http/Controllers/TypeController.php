@@ -41,6 +41,8 @@ class TypeController extends Controller
         $type = new Type();
         $type->type = $request->type;
         $type->save();
+
+        return redirect()->route('type.index')->with('success', 'Type créée avec succès');
     }
 
     /**

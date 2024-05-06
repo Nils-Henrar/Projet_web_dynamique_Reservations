@@ -43,9 +43,15 @@
                 {{ $representation->schedule }}
             </td>
             <td>
-                <a href="{{ route('representation.show', $representation->id) }}" class="btn btn-primary">show</a>
-                <a href="" class="btn btn-info">edit</a>
-                <a href="" class="btn btn-danger">delete</a>
+                <div class="row justify-content-between">
+                    <a href="{{ route('representation.show', $representation->id) }}" class="btn btn-primary">show</a>
+                    <a href="{{ route('representation.edit', $representation->id) }}" class="btn btn-info">edit</a>
+                    <form action="{{ route('representation.destroy', ['id' => $representation->id]) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette représentation ?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">delete</button>
+                    </form>
+                </div>
             </td>
         </tr>
         @endforeach

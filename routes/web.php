@@ -56,7 +56,15 @@ Route::post('/show', [ShowController::class, 'store'])->name('show.store');
 
 Route::get('/show/{id}/edit', [ShowController::class, 'edit'])->where('id', '[0-9]+')->name('show.edit');
 
-Route::delete('/show/{id}', [ShowController::class, 'delete'])->where('id', '[0-9]+')->name('show.delete');
+Route::delete('/show/{id}', [ShowController::class, 'destroy'])->where('id', '[0-9]+')->name('show.delete');
+
+Route::get('/representation/create', [RepresentationController::class, 'create'])->name('representation.create');
+
+Route::get('/representation/create', [RepresentationController::class, 'create'])->name('representation.create');
+
+Route::post('/representation', [RepresentationController::class, 'store'])->name('representation.store');
+
+Route::get('/representation/{id}', [RepresentationController::class, 'show'])->where('id', '[0-9]+')->name('representation.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -107,7 +115,7 @@ Route::get('/type/{id}/edit', [TypeController::class, 'edit'])->where('id', '[0-
 
 Route::put('/type/{id}', [TypeController::class, 'update'])->where('id', '[0-9]+')->name('type.update');
 
-Route::delete('/type/{id}', [TypeController::class, 'delete'])->where('id', '[0-9]+')->name('type.delete');
+Route::delete('/type/{id}', [TypeController::class, 'destroy'])->where('id', '[0-9]+')->name('type.delete');
 
 
 /*
@@ -169,17 +177,13 @@ Route::delete('/location/{id}', [LocationController::class, 'delete'])->where('i
 
 Route::get('/representation', [RepresentationController::class, 'index'])->name('representation.index');
 
-Route::get('/representation/create', [RepresentationController::class, 'create'])->name('representation.create');
 
-Route::post('/representation', [RepresentationController::class, 'store'])->name('representation.store');
-
-Route::get('/representation/{id}', [RepresentationController::class, 'show'])->where('id', '[0-9]+')->name('representation.show');
 
 Route::get('/representation/{id}/edit', [RepresentationController::class, 'edit'])->where('id', '[0-9]+')->name('representation.edit');
 
 Route::put('/representation/{id}', [RepresentationController::class, 'update'])->where('id', '[0-9]+')->name('representation.update');
 
-Route::delete('/representation/{id}', [RepresentationController::class, 'delete'])->where('id', '[0-9]+')->name('representation.delete');
+Route::delete('/representation/{id}', [RepresentationController::class, 'destroy'])->where('id', '[0-9]+')->name('representation.destroy');
 
 /*
 |--------------------------------------------------------------------------

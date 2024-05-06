@@ -7,7 +7,7 @@
 @stop
 
 @section ('content')
-<p>delete a faire + récuperer les artistes pour edit</p>
+<p>faire edit + create</p>
 <div class="container mt-3">
     <div class="row justify-content-end mb-5">
         <a href="{{ route('show.create') }}" class="btn btn-primary">Ajouter un nouveau spectacle</a>
@@ -33,9 +33,15 @@
                         <td>Non</td>
                     @endif
                     <td>
-                        <a href="{{ route('admin.showid', $show->id) }}" class="btn btn-primary mr-1">show</a>
-                        <a href="{{ route('show.edit', $show->id) }}" class="btn btn-info mr-1">edit</a>
-                        <a href="{{ route('show.delete', $show->id) }}" class="btn btn-danger">delete</a>
+                        <div class="row">
+                            <a href="{{ route('admin.showid', $show->id) }}" class="btn btn-primary mr-1">show</a>
+                                <a href="{{ route('show.edit', $show->id) }}" class="btn btn-info mr-1">edit</a>
+                                <form action="{{ route('show.delete', ['id' => $show->id]) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer ce spectacle ?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach

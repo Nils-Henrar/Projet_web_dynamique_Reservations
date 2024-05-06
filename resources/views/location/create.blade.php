@@ -1,6 +1,10 @@
-@extends ('layouts.main')
+@extends('adminlte::page')
 
-@section ('title', 'Ajouter un lieu')
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Représentations</h1>
+@stop
 
 @section ('content')
 
@@ -52,8 +56,8 @@
     </div>
 
     <div class="flex items-center justify-between">
-        <a href="{{ route('artist.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Retour</a>
-        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Ajouter</button>
+        <a href="{{ route('representation.index') }}" class="btn btn-info">Retour</a>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
     </div>
 
     @if ($errors->any())
@@ -69,4 +73,4 @@
 
 </form>
 
-@endsection
+@stop

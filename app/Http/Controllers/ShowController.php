@@ -131,6 +131,10 @@ class ShowController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $show = Show::findOrFail($id);
+        
+        $show->delete();
+
+        return redirect()->route('admin.show')->with('success', 'Représentation supprimée avec succès');
     }
 }

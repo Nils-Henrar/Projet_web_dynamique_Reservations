@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Projet</b> Réservation',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/admin',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -325,7 +325,7 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url' => 'admin/settings',
+            'url' => '/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
@@ -341,6 +341,21 @@ return [
         [
             'text' => 'representations',
             'url' => '/representation',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Locations',
+            'url' => '/location',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Localités',
+            'url' => '/locality',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Types d\'artistes',
+            'url' => '/type',
             'icon' => 'fas fa-fw fa-user',
         ],
         [

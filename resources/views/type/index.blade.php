@@ -1,25 +1,50 @@
-@extends ('layouts.main')
+@extends('adminlte::page')
 
-@section ('title', 'Types')
+@section('title', 'Dashboard')
+
+@section('content_header')
+@stop
 
 @section ('content')
-
+<div class="container">
 <h2 class="text-2xl mt-2">Types</h2>
 
-<div class="flex">
-    <a href="{{ route('type.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded mt-4 mb-4">Add a type</a>
-
+<div class="row justify-content-end">
+    <a href="{{ route('type.create') }}" class="btn btn-primary">Ajouter un type d'artiste</a>
 </div>
+
 <div class="mt-4">
-    <ul class="mt-4">
-        @foreach ($types as $type)
-        <li class="text-align: left mb-4">
-            <!-- lien en tailwind -->
-            <a href="{{ route('type.show', $type->id) }}" class="bg-white-500 hover:bg-gray-300 text-black font-bold py-1 px-3 rounded mt-4 mb-4 mr-2">{{ $type->type }}</a>
-        </li>
-
-        @endforeach
-    </ul>
+    <table class="table table-striped">  <!-- Tableau avec bandes alternées -->
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($types as $type)
+            <tr>
+                <!-- Lien vers le type -->
+                <td>
+                    {{ $type->type }}
+                </td>
+                <td>
+                    <div class="row">
+                        <a href="{{ route('type.show', $type->id) }}" class="btn btn-primary mr-2">show</a>
+                        <a href="{{ route('type.edit', $type->id) }}" class="btn btn-info mr-2">edit</a>
+                        <form action="{{ route('type.delete', ['id' => $type->id]) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette représentation ?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 
-@endsection
+</div>
+
+@stop

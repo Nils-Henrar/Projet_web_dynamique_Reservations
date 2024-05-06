@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Representation;
 use Carbon\Carbon;
 use App\Models\Price;
+use App\Models\Show;
+use App\Models\Location;
 
 class RepresentationController extends Controller
 {
@@ -29,8 +31,11 @@ class RepresentationController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        //
+    {   
+        $shows = Show::all();
+        $locations = Location::all();
+
+        return view('representation.create', ['shows' => $shows, 'locations' => $locations]);
     }
 
     /**
@@ -38,7 +43,23 @@ class RepresentationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         // Valider les données du formulaire
+         $validatedData = $request->validate([
+            'show_id' => 'required|exists:shows,id',  // L'ID du spectacle doit exister
+            'location_id' => 'nullable|exists:locations,id',  // L'ID du lieu peut être nul, mais doit exister s'il est fourni
+            'schedule' => 'nullable|date',  // 'when' doit être une date valide
+        ]);
+
+        // Créer une nouvelle représentation
+        $representation = new Representation;
+        $representation->show_id = $validatedData['show_id'];
+        $representation->location_id = $validatedData['location_id'] ?? null;
+        $representation->schedule = $validatedData['schedule'] ?? null;
+        
+        $representation->save();  // Enregistrer dans la base de données
+        
+        // Redirection après succès avec un message flash
+        return redirect()->route('representation.index')->with('success', 'Représentation créée avec succès');
     }
 
     /**
@@ -64,7 +85,15 @@ class RepresentationController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Charger la représentation par son identifiant
+        $representation = Representation::with(['show', 'location'])->findOrFail($id);
+
+        // Charger les données nécessaires pour le formulaire
+        $shows = Show::all();  // Tous les spectacles disponibles
+        $locations = Location::all();  // Tous les lieux disponibles
+
+        // Retourner la vue d'édition avec les données nécessaires
+        return view('representation.edit', ['representation' => $representation, 'shows' => $shows, 'locations' => $locations]);
     }
 
     /**
@@ -72,7 +101,24 @@ class RepresentationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $validatedData = $request->validate([
+                'show_id' => 'required|exists:shows,id',
+                'location_id' => 'nullable|exists:locations,id',
+                'schedule' => 'nullable|date',
+            ]);
+
+            $representation = Representation::findOrFail($id);
+            $representation->show_id = $validatedData['show_id'];
+            $representation->location_id = $validatedData['location_id'] ?? null;
+            $representation->schedule = $validatedData['schedule'] ?? null;
+
+            $representation->save();
+
+            return redirect()->route('representation.index')->with('success', 'Représentation mise à jour avec succès');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();  // Renvoie les anciennes valeurs
+        }
     }
 
     /**
@@ -80,7 +126,13 @@ class RepresentationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $representation = Representation::findOrFail($id);
+        
+        $representation->delete();
+
+        return redirect()->route('representation.index')->with('success', 'Représentation supprimée avec succès');
+
     }
 
     /**
