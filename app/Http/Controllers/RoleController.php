@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Role;
+use App\Http\Requests\RoleRequest;
 
 class RoleController extends Controller
 {
@@ -34,13 +35,10 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
         //validation des données du formulaire
-
-        $validated = $request->validate([
-            'role' => 'required|max:30',
-        ]);
+        $validated = $request->validated();
 
         $role = new Role();
 
@@ -81,13 +79,15 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RoleRequest $request, string $id)
     {
         // validation des données du formulaire
 
-        $validated = $request->validate([
-            'role' => 'required|max:30',
-        ]);
+        // $validated = $request->validate([
+        //     'role' => 'required|max:30',
+        // ]);
+
+        $validated = $request->validated();
 
         $role = Role::find($id);
 

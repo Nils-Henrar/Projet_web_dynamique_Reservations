@@ -37,8 +37,8 @@ class StoreArtistRequest extends FormRequest
         return [
             'firstname' => 'required|max:60',
             'lastname' => 'required|max:60',
-            'types' => 'sometimes|array', // vérifie que types est un tableau
-            'types.*' => 'exists:types,id' // vérifie que chaque élément du tableau types existe dans la table types
+            'types' => 'sometimes|array', 
+            'types.*' => 'exists:types,id',
         ];
     }
 }

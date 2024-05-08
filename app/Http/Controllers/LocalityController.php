@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Locality;
+use App\Http\Requests\LocalityRequest;
 
 class LocalityController extends Controller
 {
@@ -35,15 +36,9 @@ class LocalityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LocalityRequest $request)
     {
-        //
-
-        // Valider les données du formulaire
-        $validatedData = $request->validate([
-            'postal_code' => 'required|string|max:10',  // Le code postal est requis
-            'locality' => 'required|string|max:255',  // Le nom de la localité est requis
-        ]);
+        $validatedData = $request->validated();
 
         // Créer une nouvelle localité avec les données validées
         $locality = new Locality;
@@ -90,14 +85,11 @@ class LocalityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(LocalityRequest $request, string $id)
     {
         try {
             // Valider les données du formulaire
-            $validatedData = $request->validate([
-                'postal_code' => 'required|string|max:10',  // Code postal requis et limité
-                'locality' => 'required|string|max:255',  // Nom de la localité requis
-            ]);
+            $validatedData = $request->validated();
 
             // Trouver la localité par son ID
             $locality = Locality::findOrFail($id);  // Exception si l'ID n'existe pas

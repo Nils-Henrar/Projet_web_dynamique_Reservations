@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Price;
+use App\Http\Requests\PriceRequest;
 
 class PriceController extends Controller
 {
@@ -28,14 +29,10 @@ class PriceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PriceRequest $request)
     {
-        $validated = $request->validate([
-            'type' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'end_date' => 'date',
-        ]);
+
+        $validated = $request->validated();
     
         $price = new Price();
         $price->type = $validated['type'];
@@ -70,14 +67,16 @@ class PriceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PriceRequest $request, string $id)
     {
-        $validated = $request->validate([
-            'type' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'end_date' => 'date|after_or_equal:start_date',
-        ]);
+        // $validated = $request->validate([
+        //     'type' => 'required|string|max:255',
+        //     'price' => 'required|numeric|min:0',
+        //     'start_date' => 'required|date',
+        //     'end_date' => 'date|after_or_equal:start_date',
+        // ]);
+
+        $validated = $request->validated();
 
         $price = Price::findOrFail($id);
         $price->update($validated);

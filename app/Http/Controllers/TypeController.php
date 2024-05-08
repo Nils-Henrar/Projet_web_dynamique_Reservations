@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Type;
+use App\Http\Requests\TypeRequest;
 
 class TypeController extends Controller
 {
@@ -34,9 +35,9 @@ class TypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TypeRequest $request)
     {
-        //
+        $validated = $request->validated();
 
         $type = new Type();
         $type->type = $request->type;
@@ -75,13 +76,15 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TypeRequest $request, string $id)
     {
         // Validation des données du formulaire
 
-        $validated = $request->validate([
-            'type' => 'required|string|max:60',
-        ]);
+        // $validated = $request->validate([
+        //     'type' => 'required|string|max:60',
+        // ]);
+
+        $validated = $request->validated();
 
         $type = Type::find($id);
 

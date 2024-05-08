@@ -7,6 +7,7 @@ use App\Models\Show;
 use Carbon\Carbon;
 use App\Models\Locality;
 use App\Models\Artist;
+use App\Http\Requests\ShowRequest;
 
 class ShowController extends Controller
 {
@@ -70,19 +71,11 @@ class ShowController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ShowRequest $request)
     {
         // Valider les données du formulaire
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|min:10',
-            'artists' => 'array',
-            'artists.*' => 'exists:artists,id', 
-            'new_artist_firstname' => 'nullable|string|max:255',
-            'new_artist_lastname' => 'nullable|string|max:255',
-        ]);
+        $validated = $request->validated();
 
-        dd($validated);
         // Créer le spectacle avec les données validées
         $show = Show::create([
             'title' => $validated['title'],
@@ -150,15 +143,10 @@ class ShowController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ShowRequest $request, string $id)
     {
         // Valider les données du formulaire
-        $validated = $request->validate([
-            'title' => 'required|string|max:255', // Exemple de validation
-            'description' => 'required|string', // Validation pour la description
-            'artists' => 'array', // Si vous avez des artistes associés
-            'artists.*' => 'exists:artists,id', // Vérifie que chaque artiste existe
-        ]);
+        $validated = $request->validated();
 
         // Récupérer le spectacle à mettre à jour
         $show = Show::findOrFail($id); // Trouver le spectacle ou renvoyer une erreur 404

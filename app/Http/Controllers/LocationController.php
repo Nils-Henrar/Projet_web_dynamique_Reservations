@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Location;
 use App\Models\Locality;
+use App\Http\Requests\LocationRequest;
 
 class LocationController extends Controller
 {
@@ -40,17 +41,10 @@ class LocationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LocationRequest $request)
     {
-        // validation des données du formulaire
-
-        $validated = $request->validate([
-            'designation' => 'required|max:60',
-            'address' => 'required|max:60',
-            'website' => 'max:255',
-            'phone' => 'max:30',
-            'locality_id' => 'required'
-        ]);
+        // validation des données du formulaire   
+        $validated = $request->validated();
 
         $location = new Location();
 
@@ -106,17 +100,10 @@ class LocationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(LocationRequest $request, $id)
     {
         //validation des données du formulaire
-
-        $validated = $request->validate([
-            'designation' => 'required|max:60',
-            'address' => 'required|max:60',
-            'website' => 'max:255',
-            'phone' => 'max:30',
-            'locality_id' => 'required',
-        ]);
+        $validated = $request->validated();
 
         $location = Location::find($id);
         $location->update($validated);

@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Price;
 use App\Models\Show;
 use App\Models\Location;
+use App\Http\Requests\RepresentationRequest;
 
 class RepresentationController extends Controller
 {
@@ -17,8 +18,6 @@ class RepresentationController extends Controller
      */
     public function index()
     {
-        //
-
         $representations = Representation::all(); // ou Db::select('select * from representations'); Db::table('representations')->get();
 
         return view('representation.index', [
@@ -41,14 +40,16 @@ class RepresentationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RepresentationRequest $request)
     {
          // Valider les données du formulaire
-         $validatedData = $request->validate([
-            'show_id' => 'required|exists:shows,id',  // L'ID du spectacle doit exister
-            'location_id' => 'nullable|exists:locations,id',  // L'ID du lieu peut être nul, mais doit exister s'il est fourni
-            'schedule' => 'nullable|date',  // 'when' doit être une date valide
-        ]);
+        //  $validatedData = $request->validate([
+        //     'show_id' => 'required|exists:shows,id',  // L'ID du spectacle doit exister
+        //     'location_id' => 'nullable|exists:locations,id',  // L'ID du lieu peut être nul, mais doit exister s'il est fourni
+        //     'schedule' => 'nullable|date',  // 'when' doit être une date valide
+        // ]);
+
+        $validatedData = $request->validated();
 
         // Créer une nouvelle représentation
         $representation = new Representation;
@@ -99,14 +100,11 @@ class RepresentationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RepresentationRequest $request, string $id)
     {
         try {
-            $validatedData = $request->validate([
-                'show_id' => 'required|exists:shows,id',
-                'location_id' => 'nullable|exists:locations,id',
-                'schedule' => 'nullable|date',
-            ]);
+        
+            $validatedData = $request->validated();
 
             $representation = Representation::findOrFail($id);
             $representation->show_id = $validatedData['show_id'];
