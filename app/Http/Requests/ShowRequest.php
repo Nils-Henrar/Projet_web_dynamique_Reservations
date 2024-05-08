@@ -24,10 +24,11 @@ class ShowRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string|min:10',
+            'duration' => 'required|numeric|min:1',
+            'poster_url' => 'nullable|string',
+            'created_in' => 'required|string|max:4',
             'artists' => 'array',
-            'artists.*' => 'exists:artists,id', 
-            'new_artist_firstname' => 'nullable|string|max:255',
-            'new_artist_lastname' => 'nullable|string|max:255',
+            'artists.*' => 'exists:artists,id',     
         ];
     }
 }

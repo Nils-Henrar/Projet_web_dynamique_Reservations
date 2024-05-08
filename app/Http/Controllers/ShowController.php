@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use App\Models\Locality;
 use App\Models\Artist;
 use App\Http\Requests\ShowRequest;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ShowController extends Controller
 {
@@ -80,6 +82,10 @@ class ShowController extends Controller
         $show = Show::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
+            'slug' => Str::slug($validated['title']),
+            'duration' => $validated['duration'],
+            'poster_url' => $validated['poster_url'] ?? null,
+            'created_in' => $validated['created_in'] ?? null,
         ]);
 
         // Si des artistes existants ont été sélectionnés, les associer au spectacle
@@ -88,15 +94,15 @@ class ShowController extends Controller
         }
 
         // Si des données pour un nouvel artiste ont été fournies, créer l'artiste et l'associer au spectacle
-        if (!empty($validated['new_artist_firstname']) && !empty($validated['new_artist_lastname'])) {
-            $newArtist = Artist::create([
-                'firstname' => $validated['new_artist_firstname'],
-                'lastname' => $validated['new_artist_lastname'],
-            ]);
+        // if (!empty($validated['new_artist_firstname']) && !empty($validated['new_artist_lastname'])) {
+        //     $newArtist = Artist::create([
+        //         'firstname' => $validated['new_artist_firstname'],
+        //         'lastname' => $validated['new_artist_lastname'],
+        //     ]);
 
-            // Associer le nouvel artiste au spectacle
-            $show->artistTypes()->attach($newArtist->id);
-        }
+        //     // Associer le nouvel artiste au spectacle
+        //     $show->artistTypes()->attach($newArtist->id);
+        // }
 
         // Rediriger avec un message de succès
         return redirect()->route('admin.show')->with('success', 'Spectacle créé avec succès');
@@ -171,10 +177,12 @@ class ShowController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
+    {   
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
         $show = Show::findOrFail($id);
         
         $show->delete();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         return redirect()->route('admin.show')->with('success', 'Représentation supprimée avec succès');
     }

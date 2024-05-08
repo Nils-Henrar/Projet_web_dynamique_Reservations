@@ -7,7 +7,7 @@
 @stop
 
 @section ('content')
-<p>faire edit + create</p>
+<p>Liste de spectacles</p>
 <div class="container mt-3">
     <div class="row justify-content-end mb-5">
         <a href="{{ route('show.create') }}" class="btn btn-primary">Ajouter un nouveau spectacle</a>
