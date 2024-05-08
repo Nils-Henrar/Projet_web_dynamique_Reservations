@@ -7,8 +7,8 @@
 
 @section ('content')
 
-<h1 class="text-3xl">Liste des réservations</h1>
-<table class="table table-striped border">
+<h3><strong>Liste des réservations</strong></h3>
+<table class="table table-striped border mt-5">
     <thead>
         <tr>
             <th>Spectacle</th>
@@ -17,9 +17,9 @@
             <th>Nom</th>
             <th>Prénom</th>
             <th>Email</th>
-            <th>Nombre de places</th>
-            <th>Prix total</th>
-            <th>Date de réservation</th>
+            <th>Places</th>
+            <th>Prix</th>
+            <th>Date</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -33,7 +33,7 @@
             <td>{{ $reservation->user->firstname }}</td>
             <td>{{ $reservation->user->email }}</td>
             <td>{{ $reservation->details['total_places'] }}</td>
-            <td>{{ $reservation->details['total_price'] }} €</td>
+            <td>{{ $reservation->details['total_price'] }}</td>
             <td>{{ $reservation->booking_date }}</td>
             <td>
             <form action="{{ route('admin.deletereservation',  $reservation->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette réservation ?');">

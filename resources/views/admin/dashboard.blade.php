@@ -3,13 +3,13 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Admin</h1>
+    <h1><strong>Admin</strong></h1>
 @stop
 
 @section('content')
 <div class="container p-2">
     <div class="row mb-3">
-        <p>Welcome to this beautiful admin panel.</p>
+        <p>Dashboard reservations</p>
     </div>
     <div class="row">
 
