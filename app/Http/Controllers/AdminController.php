@@ -63,4 +63,45 @@ class AdminController extends Controller
             'show' => $show
         ]);
     }
+
+    public function getReservation()
+    {   
+        $reservations = Reservation::all();
+
+        return view('admin.reservation', ['reservations' => $reservations]);
+    }
+
+    public function deleteReservation($id)
+    {
+        $reservation = Reservation::find($id);
+        $reservation->delete();
+        
+        return view('admin.reservation')->with('success', 'La réservation a été suprimé avec succès');
+    }
+
+    public function getReview()
+    {
+        // $reviews = Review::all();
+        $reviews = Review::with(['user', 'show'])->get();
+        
+        return view('admin.review', ['reviews' => $reviews]);
+    }
+
+    public function validatedReview($id)
+    {
+        $review = Review::find($id);
+        $review->validated = 1;
+        $review->save();
+        
+        return redirect()->back()->with('success', 'Validé avec succès');
+    }
+
+    public function unvalidatedReview($id)
+    {
+        $review = Review::find($id);
+        $review->validated = 0;
+        $review->save();
+        
+        return redirect()->back()->with('success', 'Dévalidé avec succès');
+    }
 }

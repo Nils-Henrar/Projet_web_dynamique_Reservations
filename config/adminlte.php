@@ -316,20 +316,20 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'pages',
+            'text' => 'pages', 
             'url' => 'admin/pages',
             'icon' => 'far fa-fw fa-file',
             'label' => 4,
             'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
         [
             'text' => 'profile',
             'url' => '/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
+        ['header' => 'RESERVATION'],
         [
-            'text' => 'artistes',
+            'text' => 'Artistes',
             'url' => '/artist',
             'icon' => 'fas fa-fw fa-user',
         ],
@@ -339,8 +339,23 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'representations',
+            'text' => 'Representations',
             'url' => '/representation',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Réservations',
+            'url' => '/admin/reservation',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Prix',
+            'url' => '/admin/price',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Reviews',
+            'url' => '/admin/review',
             'icon' => 'fas fa-fw fa-user',
         ],
         [

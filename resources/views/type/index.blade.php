@@ -32,7 +32,7 @@
                     <div class="row">
                         <a href="{{ route('type.show', $type->id) }}" class="btn btn-primary mr-2">show</a>
                         <a href="{{ route('type.edit', $type->id) }}" class="btn btn-info mr-2">edit</a>
-                        <form action="{{ route('type.delete', ['id' => $type->id]) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette représentation ?');">
+                        <form action="{{ route('type.delete', $type->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette représentation ?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">delete</button>

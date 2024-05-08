@@ -68,7 +68,7 @@
                             <div class="row">
                                 <a href="{{ route('admin.showartist', $artist->id ) }}" class="btn btn-primary mr-1">show</a>
                                 <a href="{{ route('artist.edit', $artist->id ) }}" class="btn btn-info mr-1">edit</a>
-                                <form action="{{ route('artist.delete', ['id' => $artist->id]) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cet artiste ?');">
+                                <form action="{{ route('artist.delete', $artist->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cet artiste ?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">delete</button>

@@ -57,10 +57,6 @@ class ShowController extends Controller
         //compact permet de passer des variables à la vue de la même manière que le tableau associatif ['shows' => $shows, 'communeId' => $communeId, 'localities' => $localities]
     }
 
-
-
-
-
     /**
      * Show the form for creating a new resource.
      */
@@ -76,7 +72,41 @@ class ShowController extends Controller
      */
     public function store(Request $request)
     {
-        // validation des données
+        // Valider les données du formulaire
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|min:10',
+            'artists' => 'array',
+            'artists.*' => 'exists:artists,id', 
+            'new_artist_firstname' => 'nullable|string|max:255',
+            'new_artist_lastname' => 'nullable|string|max:255',
+        ]);
+
+        dd($validated);
+        // Créer le spectacle avec les données validées
+        $show = Show::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+        ]);
+
+        // Si des artistes existants ont été sélectionnés, les associer au spectacle
+        if (isset($validated['artists'])) {
+            $show->artistTypes()->sync($validated['artists']); // Associe les artistes sélectionnés
+        }
+
+        // Si des données pour un nouvel artiste ont été fournies, créer l'artiste et l'associer au spectacle
+        if (!empty($validated['new_artist_firstname']) && !empty($validated['new_artist_lastname'])) {
+            $newArtist = Artist::create([
+                'firstname' => $validated['new_artist_firstname'],
+                'lastname' => $validated['new_artist_lastname'],
+            ]);
+
+            // Associer le nouvel artiste au spectacle
+            $show->artistTypes()->attach($newArtist->id);
+        }
+
+        // Rediriger avec un message de succès
+        return redirect()->route('admin.show')->with('success', 'Spectacle créé avec succès');
 
     }
 
@@ -110,10 +140,11 @@ class ShowController extends Controller
      */
     public function edit(string $id)
     {   
-        $show = Show::find($id);
+        $show = Show::with('artistTypes.artist')->findOrFail($id);
         $artists = Artist::all();
+        $selectedArtistIds = $show->artistTypes->pluck('artist_id')->toArray();
 
-        return view('show.edit', ['show' => $show, 'artists' => $artists]);
+        return view('show.edit', ['show' => $show, 'artists' => $artists, 'selectedArtistIds' => $selectedArtistIds]);
     }
 
     /**
@@ -121,8 +152,30 @@ class ShowController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // 
+        // Valider les données du formulaire
+        $validated = $request->validate([
+            'title' => 'required|string|max:255', // Exemple de validation
+            'description' => 'required|string', // Validation pour la description
+            'artists' => 'array', // Si vous avez des artistes associés
+            'artists.*' => 'exists:artists,id', // Vérifie que chaque artiste existe
+        ]);
 
+        // Récupérer le spectacle à mettre à jour
+        $show = Show::findOrFail($id); // Trouver le spectacle ou renvoyer une erreur 404
+
+        // Mettre à jour les champs du spectacle avec les données validées
+        $show->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+        ]);
+
+        // Mettre à jour les relations many-to-many si nécessaire
+        if (isset($validated['artists'])) {
+            $show->artistTypes()->sync($validated['artists']); // Mettre à jour les artistes associés
+        }
+
+        // Rediriger avec un message de succès
+        return redirect()->route('admin.show')->with('success', 'Spectacle mis à jour avec succès');
 
     }
 

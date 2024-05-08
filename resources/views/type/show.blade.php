@@ -1,6 +1,9 @@
-@extends ('layouts.main')
+@extends('adminlte::page')
 
-@section ('title', 'Fiche d\'un type')
+@section('title', 'Dashboard')
+
+@section('content_header')
+@stop
 
 @section ('content')
 
@@ -18,7 +21,7 @@
 </ul>
 
 <div class="mt-4">
-    <a href="{{ route('type.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Back</a>
+    <a href="{{ route('type.index') }}" class="btn btn-primary">Back</a>
 </div>
 
-@endsection
+@stop

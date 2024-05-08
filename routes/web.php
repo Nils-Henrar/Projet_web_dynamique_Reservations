@@ -13,6 +13,7 @@ use App\Http\Controllers\ShowController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PriceController;
 
 
 
@@ -54,6 +55,8 @@ Route::get('/show/create', [ShowController::class, 'create'])->name('show.create
 
 Route::post('/show', [ShowController::class, 'store'])->name('show.store');
 
+Route::put('/show/{id}', [ShowController::class, 'update'])->where('id', '[0-9]+')->name('show.update');
+
 Route::get('/show/{id}/edit', [ShowController::class, 'edit'])->where('id', '[0-9]+')->name('show.edit');
 
 Route::delete('/show/{id}', [ShowController::class, 'destroy'])->where('id', '[0-9]+')->name('show.delete');
@@ -66,16 +69,27 @@ Route::post('/representation', [RepresentationController::class, 'store'])->name
 
 Route::get('/representation/{id}', [RepresentationController::class, 'show'])->where('id', '[0-9]+')->name('representation.show');
 
-/*
-|--------------------------------------------------------------------------
-| Artist Routes
-|--------------------------------------------------------------------------
-|
-| Here are the routes for the Artist resource.
-|
-*/
+Route::get('/admin/reservation', [AdminController::class, 'getReservation'])->name('admin.reservation');
 
+Route::delete('/admin/reservation/{id}', [AdminController::class, 'deleteReservation'])->where('id', '[0-9]+')->name('admin.deletereservation');
 
+Route::get('/admin/review', [AdminController::class, 'getReview'])->name('admin.review');
+
+Route::post('/admin/review/validate/{id}', [AdminController::class, 'validatedReview'])->where('id', '[0-9]+')->name('admin.validatedreview');
+
+Route::post('/admin/review/unvalidate/{id}', [AdminController::class, 'unvalidatedReview'])->where('id', '[0-9]+')->name('admin.unvalidatedreview');
+
+Route::get('/admin/price', [PriceController::class, 'index'])->name('price.index');
+
+Route::get('/price/create', [PriceController::class, 'create'])->name('price.create');
+
+Route::post('/price', [PriceController::class, 'store'])->name('price.store');
+
+Route::delete('/admin/price/{id}', [PriceController::class, 'destroy'])->where('id', '[0-9]+')->name('price.delete');
+
+Route::get('/prices/{id}/edit', [PriceController::class, 'edit'])->name('price.edit');
+
+Route::put('/prices/{id}', [PriceController::class, 'update'])->name('price.update');
 
 Route::get('/artist/create', [ArtistController::class, 'create'])->name('artist.create');
 
@@ -88,20 +102,6 @@ Route::get('/artist/{id}/edit', [ArtistController::class, 'edit'])->where('id', 
 Route::put('/artist/{id}', [ArtistController::class, 'update'])->where('id', '[0-9]+')->name('artist.update');
 
 Route::delete('/artist/{id}', [ArtistController::class, 'delete'])->where('id', '[0-9]+')->name('artist.delete');
-
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Type Routes
-|--------------------------------------------------------------------------
-|
-| Here are the routes for the Type resource.
-|
-*/
 
 Route::get('/type', [TypeController::class, 'index'])->name('type.index');
 
@@ -117,16 +117,6 @@ Route::put('/type/{id}', [TypeController::class, 'update'])->where('id', '[0-9]+
 
 Route::delete('/type/{id}', [TypeController::class, 'destroy'])->where('id', '[0-9]+')->name('type.delete');
 
-
-/*
-|--------------------------------------------------------------------------
-| Locality Routes
-|--------------------------------------------------------------------------
-|
-| Here are the routes for the Locality resource.
-|
-*/
-
 Route::get('/locality', [LocalityController::class, 'index'])->name('locality.index');
 
 Route::get('/locality/create', [LocalityController::class, 'create'])->name('locality.create');
@@ -140,16 +130,6 @@ Route::get('/locality/{id}/edit', [LocalityController::class, 'edit'])->where('i
 Route::put('/locality/{id}', [LocalityController::class, 'update'])->where('id', '[0-9]+')->name('locality.update');
 
 Route::delete('/locality/{id}', [LocalityController::class, 'delete'])->where('id', '[0-9]+')->name('locality.delete');
-
-
-/*
-|--------------------------------------------------------------------------
-| Location Routes
-|--------------------------------------------------------------------------
-|
-| Here are the routes for the Location resource.
-|
-*/
 
 Route::get('/location', [LocationController::class, 'index'])->name('location.index');
 
@@ -165,59 +145,13 @@ Route::put('/location/{id}', [LocationController::class, 'update'])->where('id',
 
 Route::delete('/location/{id}', [LocationController::class, 'delete'])->where('id', '[0-9]+')->name('location.delete');
 
-
-/*
-|--------------------------------------------------------------------------
-| Representation Routes
-|--------------------------------------------------------------------------
-|
-| Here are the routes for the Representation resource.
-|
-*/
-
 Route::get('/representation', [RepresentationController::class, 'index'])->name('representation.index');
-
-
 
 Route::get('/representation/{id}/edit', [RepresentationController::class, 'edit'])->where('id', '[0-9]+')->name('representation.edit');
 
 Route::put('/representation/{id}', [RepresentationController::class, 'update'])->where('id', '[0-9]+')->name('representation.update');
 
 Route::delete('/representation/{id}', [RepresentationController::class, 'destroy'])->where('id', '[0-9]+')->name('representation.destroy');
-
-/*
-|--------------------------------------------------------------------------
-| Show Routes
-|--------------------------------------------------------------------------
-|
-| Here are the routes for the Show resource.
-|
-*/
-
-Route::get('/show', [ShowController::class, 'index'])->name('show.index');
-
-Route::get('/show/{id}', [ShowController::class, 'show'])->where('id', '[0-9]+')->name('show.show');
-
-
-
-
-
-
-Route::put('/show/{id}', [ShowController::class, 'update'])->where('id', '[0-9]+')->name('show.update');
-
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Role Routes
-|--------------------------------------------------------------------------
-|
-| Here are the routes for the Role resource.
-|
-*/
 
 Route::get('/role', [RoleController::class, 'index'])->name('role.index');
 
@@ -234,6 +168,22 @@ Route::put('/role/{id}', [RoleController::class, 'update'])->where('id', '[0-9]+
 Route::delete('/role/{id}', [RoleController::class, 'delete'])->where('id', '[0-9]+')->name('role.delete');
 
 
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+|  Routes
+|--------------------------------------------------------------------------
+|
+| Here are the routes for the Show resource.
+|
+*/
+
+Route::get('/show', [ShowController::class, 'index'])->name('show.index');
+
+Route::get('/show/{id}', [ShowController::class, 'show'])->where('id', '[0-9]+')->name('show.show');
 
 /*
 |--------------------------------------------------------------------------
