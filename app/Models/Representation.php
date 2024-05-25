@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
 
-class Representation extends Model
+class Representation extends Model implements Feedable
 {
     use HasFactory;
 
@@ -65,5 +68,24 @@ class Representation extends Model
 
     {
         return $this->hasMany(RepresentationReservation::class);
+    }
+
+    public function toFeedItem(): FeedItem
+    {
+        return FeedItem::create()
+            ->id($this->id) //$this cest la Represenation 
+            ->title($this->show->title)
+            ->summary($this->show->description)
+            ->updated(Carbon::now()) //todo timestamps true
+            //->updated($this->updated_at) todo timestamps true
+            ->link(route('representation_show',$this->id))//lien vers le show de la representation
+            ->authorName("Bob Sull")
+            ->authorEmail("bob@sull.com");
+    }
+
+    public static function getFeedItems()
+    {
+        return Representation::whereYear('schedule', date('Y'))
+        ->whereMonth('schedule', date('n'))->get(); //todo representation du mois     
     }
 }

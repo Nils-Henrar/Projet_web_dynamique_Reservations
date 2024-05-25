@@ -76,6 +76,12 @@
 
         </form>
 
+        <a href="{{ url('feed') }}" class="inline-flex items-center bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded">
+    <i class="fas fa-rss mr-2"></i> Flux RSS
+</a>
+
+
+
         <script>
             function checkDateRange() {
                 var startDate = document.getElementById('start_date').value;
