@@ -7,6 +7,7 @@ use App\Models\Show;
 use Carbon\Carbon;
 use App\Models\Locality;
 use App\Models\Artist;
+use Illuminate\Support\Facades\App;
 
 class ShowController extends Controller
 {
@@ -15,6 +16,7 @@ class ShowController extends Controller
      */
     public function index(Request $request)
     {
+        //App::setLocale('fr');
         $keyword = $request->input('keyword');
         $communeId = $request->input('commune');
         $dateOption = $request->input('date_option');

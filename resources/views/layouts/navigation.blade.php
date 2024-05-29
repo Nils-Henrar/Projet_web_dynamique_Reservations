@@ -1,4 +1,5 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<link href="{{ asset('css/flag-icon.min.css') }}" rel="stylesheet">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -32,6 +33,41 @@
                     <x-nav-link :href="route('my-reservations')" :active="request()->routeIs('my-reservations')">
                         {{ __('Mes réservations') }}
                     </x-nav-link>
+
+                    <!-- Language Selection -->
+<div class="hidden sm:flex sm:items-center sm:ms-6">
+    <!-- Dropdown Trigger -->
+    <div x-data="{ open: false }" class="relative">
+        <button @click="open = ! open" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+            Langue
+            <div class="ms-1">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <!-- Icône du menu déroulant -->
+                </svg>
+            </div>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <!-- French Option -->
+                <div class="language-menu">
+                <form method="POST" action="{{ route('lang.switch', 'en') }}">
+    @csrf
+    <button type="submit" name="locale" value="en">EN</button>
+</form>
+<form method="POST" action="{{ route('lang.switch', 'fr') }}">
+    @csrf
+    <button type="submit" name="locale" value="fr">FR</button>
+</form>
+
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
                 </div>

@@ -11,42 +11,44 @@
 
         <!--  formulaire de recherche keyword -->
         <form id="keywordSearchForm" action="{{ route('show.index') }}" method="GET">
-            <input type="text" name="keyword" placeholder="Recherche par mots-clés" aria-label="Search for shows" class="border p-2 rounded">
+            <input type="text" name="keyword" placeholder="{{ __('shows.keyword_search_placeholder') }}" aria-label="Search for shows" class="border p-2 rounded">
             <button type="submit" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded">
-                Rechercher
+            {{__('shows.research')}}   
             </button>
         </form>
 
         <!-- Formulaire de filtrage -->
         <form id=" filterForm" action="{{ route('show.index') }}" method="GET" class="mt-4">
 
-            <span class="text-pink-500 text-2xl mt-4">Filtrer les spectacles</span>
+            <span class="text-pink-500 text-2xl mt-4">{{__('shows.filter')}}</span>
 
 
             <!-- Date picker pour choisir une date en particulier -->
             <div class="date-range-picker flex flex-col mb-4">
-                De
+            {{__('shows.from')}}
                 <label for="start_date"></label>
-                <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}" onchange="clearDateOption()" class="border focus:ring-pink-500 focus:border-pink-500" à <label for="end_date"></label>
-                à
+                <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}" onchange="clearDateOption()" class="border focus:ring-pink-500 focus:border-pink-500"  à <label for="end_date" ></label>
+            {{__('shows.to')}}
                 <input type="date" id="end_date" name="end_date" value="{{ request('end_date') }}" onchange="clearDateOption()" class="border focus:ring-pink-500 focus:border-pink-500">
             </div>
+
+  
             <div class="date-options flex flex-col mb-4">
                 <label>
                     <input type="radio" class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded" name="date_option" value="today" onchange="clearDateRange()" {{ request('date_option') == 'today' ? 'checked' : '' }}>
-                    Aujourd'hui
+                    {{__('shows.today')}}
                 </label>
                 <label>
                     <input type="radio" class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded" name="date_option" value="this_week" onchange="clearDateRange()" {{ request('date_option') == 'this_week' ? 'checked' : '' }}>
-                    Cette semaine
+                    {{__('shows.week')}}
                 </label>
                 <label>
                     <input type="radio" class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded" name="date_option" value="this_month" onchange="clearDateRange()" {{ request('date_option') == 'this_month' ? 'checked' : '' }}>
-                    Ce mois-ci
+                    {{__('shows.month')}}
                 </label>
                 <label>
                     <input type="radio" class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded" name="date_option" value="" onchange="clearDateRange()" {{ request('date_option') ? 'checked' : '' }}>
-                    Toutes les dates
+                    {{__('shows.date')}}
                 </label>
 
             </div>
@@ -72,7 +74,7 @@
                 </div>
             </div>
 
-            <button onclick="submitForm()" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-1 px-3 rounded mt-4 mb-4">Filtrer</button>
+            <button onclick="submitForm()" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-1 px-3 rounded mt-4 mb-4">{{__('shows.filter_button')}}</button>
 
         </form>
 
@@ -112,7 +114,7 @@
 
     <!-- Colonne principale pour la liste des spectacles -->
     <div class="w-full sm:w-3/4 mb-8">
-        <h2 class="text-pink-500 text-3xl mt-2">Liste des spectacles</h2>
+        <h2 class="text-pink-500 text-3xl mt-2">{{__('shows.list')}}</h2>
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach ($shows as $show)
             <div class="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -123,7 +125,7 @@
                 <div class="p-4">
                     <h3 class="text-pink-500 text-2xl mb-2">{{ $show->title }}</h3>
                     <div class="text-gray-700">
-                        Réalisé par
+                         {{__('shows.realize')}}    
                         @foreach ($show->auteurs as $auteur)
                         <a href="{{ route('artist.show', $auteur->id) }}" class="text-blue-500 hover:text-blue-700">{{ $auteur->firstname }} {{ $auteur->lastname }}</a>
                         @if (!$loop->last),
@@ -133,11 +135,11 @@
                 </div>
                 <div class="p-4 border-t border-gray-200">
                     <div class="flex justify-between">
-                        <a href="{{ route('show.show', $show->id) }}" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-1 px-3 rounded">En savoir plus</a>
+                        <a href="{{ route('show.show', $show->id) }}" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-1 px-3 rounded">{{__('shows.more')}}</a>
                         @if ($show->bookable && $show->representations->count() > 0)
-                        <em class="text-green-500">Réservable</em>
+                        <em class="text-green-500">{{__('shows.book')}}</em>
                         @else
-                        <em class="text-red-500">Non réservable</em>
+                        <em class="text-red-500">{{__('shows.no_book')}}</em>
                         @endif
                     </div>
                 </div>

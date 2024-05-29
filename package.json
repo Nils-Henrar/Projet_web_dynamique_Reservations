@@ -18,5 +18,9 @@
         "sass": "^1.56.1",
         "tailwindcss": "^3.1.0",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "flag-icon": "^2.5.0",
+        "flag-icon-css": "^4.1.7"
     }
 }

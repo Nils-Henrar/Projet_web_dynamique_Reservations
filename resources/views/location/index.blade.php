@@ -4,10 +4,10 @@
 
 @section ('content')
 
-<h2 class="text-3xl mt-2">Lieux de représentation</h2>
+<h2 class="text-3xl mt-2">{{__('location.performance')}}</h2>
 
 <div class="flex">
-    <a href="{{ route('location.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded mt-4 mb-4">Ajouter un lieu</a>
+    <a href="{{ route('location.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded mt-4 mb-4">{{__('location.location')}}</a>
 </div>
 
 <div class="mt-4">

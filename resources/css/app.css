@@ -3,3 +3,4 @@
 @tailwind utilities;
 /* colors */
 @tailwind colors;
+@import '~flag-icon-css/css/flag-icon.min.css';

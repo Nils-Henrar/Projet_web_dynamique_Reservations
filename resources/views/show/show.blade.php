@@ -55,15 +55,15 @@
 
     <!-- affichage des représentations -->
 
-    <h2 class="text-2xl mt-12"><strong>Liste des représentations</strong></h2>
+    <h2 class="text-2xl mt-12"><strong>{{__('shows.list')}}</strong></h2>
     @if ($show->representations->count() >= 1)
 
     <table class="mt-4 w-full table-fixed">
         <thead>
             <tr class="bg-gray-200">
                 <th class="text-left">Date</th>
-                <th class="text-left">Heure</th>
-                <th class="text-left">Lieu</th>
+                <th class="text-left">{{__('shows.hour')}}</th>
+                <th class="text-left">{{__('shows.place')}}</th>
                 <th class="text-right"></th>
             </tr>
         <tbody>
@@ -82,7 +82,7 @@
                     @endif
                 </td>
                 <td class="text-right">
-                    <a href="{{ route('representation.book', $representation->id) }}" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-1 px-4 rounded">Réserver</a>
+                    <a href="{{ route('representation.book', $representation->id) }}" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-1 px-4 rounded">{{__('shows.bt_book')}}</a>
                 </td>
 
             </tr>
@@ -90,13 +90,13 @@
         </tbody>
     </table>
     @else
-    <p class="mt-4">Pas de représentation pour le moment</p>
+    <p class="mt-4">{{__('shows.representation')}}</p>
     @endif
 
 </article>
 
 <div class="mt-4">
-    <a href="{{ route('show.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Retour</a>
+    <a href="{{ route('show.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">{{__('shows.bt_return')}}</a>
 </div>
 
 <!-- footer navigation contact -->
@@ -121,7 +121,7 @@
         <!-- condition générales | protection de la vie privée  aligné à droite -->
         <div class="flex justify-between items-center py-4 w-1/2">
             <div class="text-white text-sm ml-4">
-                <p><a href="">Conditions générales </a> | <a href=""> Protection de la vie privée </a></p>
+                <p><a href="">{{__('shows.terms')}} </a> | <a href=""> {{__('shows.privacy')}} </a></p>
 
             </div>
         </div>

@@ -12,7 +12,7 @@ use App\Http\Controllers\RepresentationController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StripeWebhookController;
-
+use App\Http\Controllers\LangueController;
 
 
 /*
@@ -267,3 +267,8 @@ require __DIR__ . '/auth.php';
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Route::get('/lang/{locale}', ['LangueController::class, 'edit'])->name('lang.switch');
+
+//Route::post('/lang/{locale}', [LangueController::class, 'switch'])->name('lang.switch');
+Route::post('/lang/switch', [LangueController::class, 'switch'])->name('lang.switch');

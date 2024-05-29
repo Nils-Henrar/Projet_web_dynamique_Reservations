@@ -10,6 +10,7 @@ use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreArtistRequest;
 use App\Http\Requests\UpdateArtistRequest;
+use Illuminate\Support\Facades\App;
 
 class ArtistController extends Controller
 {
@@ -21,6 +22,7 @@ class ArtistController extends Controller
     public function index()
     {
         // 
+        //App::setLocale('fr');
         $artists = Artist::all(); // ou Db::select('select * from artists'); Db::table('artists')->get();
         return view('artist.index', [
             'artists' => $artists,
@@ -36,7 +38,7 @@ class ArtistController extends Controller
     public function create()
     {
         //
-
+        //App::setLocale('fr');
         $types = Type::all();
 
         return view('artist.create', [
@@ -79,7 +81,8 @@ class ArtistController extends Controller
      */
     public function show(string $id)
     {
-        // 
+        
+        //App::setLocale('fr');
         $artist = Artist::find($id);
 
         return view('artist.show', [
@@ -97,7 +100,7 @@ class ArtistController extends Controller
     public function edit(string $id)
     {
         //
-
+         //App::setLocale('fr');
         $artist = Artist::find($id);
         $types = Type::all();
 

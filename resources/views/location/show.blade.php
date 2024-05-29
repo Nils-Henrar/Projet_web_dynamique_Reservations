@@ -27,7 +27,7 @@
 </ul>
 
 
-<h2 class="text-2xl mt-4">Liste des spectacles</h2>
+<h2 class="text-2xl mt-4">{{__('shows.list')}}</h2>
 
 <ul class="mt-4">
     @foreach ($location->shows as $show)
@@ -39,8 +39,8 @@
 </ul>
 
 <div class="mt-4">
-    <a href="{{ route('location.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Retour</a>
-    <a href="{{ route('location.edit', $location->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">Modifier</a>
+    <a href="{{ route('location.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">{{__('shows.bt_return')}}</a>
+    <a href="{{ route('location.edit', $location->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline">{{__('artists.modify')}}</a>
 </div>
 
 @endsection
