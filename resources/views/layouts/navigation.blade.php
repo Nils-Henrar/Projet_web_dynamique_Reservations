@@ -24,10 +24,10 @@
                         {{ __('Artistes') }}
                     </x-nav-link>
 
-                    <!-- all reservations -->
+                    <!-- all reservations
                     <x-nav-link :href="route('reservation.index')" :active="request()->routeIs('reservation.index')">
                         {{ __('Réservations(Admin)') }}
-                    </x-nav-link>
+                    </x-nav-link> -->
 
                     <x-nav-link :href="route('my-reservations')" :active="request()->routeIs('my-reservations')">
                         {{ __('Mes réservations') }}
