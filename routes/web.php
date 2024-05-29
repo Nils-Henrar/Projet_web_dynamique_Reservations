@@ -41,135 +41,136 @@ Route::get('/', function () {
 |
 */
 
-Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-Route::get('/artist', [ArtistController::class, 'index'])->name('artist.index');
 
-Route::get('/admin/artist/{id}', [AdminController::class, 'showArtist'])->name('admin.showartist');
 
-Route::get('/admin/show', [AdminController::class, 'getShow'])->name('admin.show');
+Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(function () {
+    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-Route::get('/admin/show/{id}', [AdminController::class, 'getShowId'])->name('admin.showid');
+    Route::get('/artist', [ArtistController::class, 'index'])->name('artist.index');
 
-Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
+    Route::get('/admin/artist/{id}', [AdminController::class, 'showArtist'])->name('admin.showartist');
 
-Route::post('/show', [ShowController::class, 'store'])->name('show.store');
+    Route::get('/admin/show', [AdminController::class, 'getShow'])->name('admin.show');
 
-Route::put('/show/{id}', [ShowController::class, 'update'])->where('id', '[0-9]+')->name('show.update');
+    Route::get('/admin/show/{id}', [AdminController::class, 'getShowId'])->name('admin.showid');
 
-Route::get('/show/{id}/edit', [ShowController::class, 'edit'])->where('id', '[0-9]+')->name('show.edit');
+    Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
 
-Route::delete('/show/{id}', [ShowController::class, 'destroy'])->where('id', '[0-9]+')->name('show.delete');
+    Route::post('/show', [ShowController::class, 'store'])->name('show.store');
 
-Route::get('/representation/create', [RepresentationController::class, 'create'])->name('representation.create');
+    Route::put('/show/{id}', [ShowController::class, 'update'])->where('id', '[0-9]+')->name('show.update');
 
-Route::get('/representation/create', [RepresentationController::class, 'create'])->name('representation.create');
+    Route::get('/show/{id}/edit', [ShowController::class, 'edit'])->where('id', '[0-9]+')->name('show.edit');
 
-Route::post('/representation', [RepresentationController::class, 'store'])->name('representation.store');
+    Route::delete('/show/{id}', [ShowController::class, 'destroy'])->where('id', '[0-9]+')->name('show.delete');
 
-Route::get('/representation/{id}', [RepresentationController::class, 'show'])->where('id', '[0-9]+')->name('representation.show');
+    Route::get('/representation/create', [RepresentationController::class, 'create'])->name('representation.create');
 
-Route::get('/admin/reservation', [AdminController::class, 'getReservation'])->name('admin.reservation');
+    Route::get('/representation/create', [RepresentationController::class, 'create'])->name('representation.create');
 
-Route::delete('/admin/reservation/{id}', [AdminController::class, 'deleteReservation'])->where('id', '[0-9]+')->name('admin.deletereservation');
+    Route::post('/representation', [RepresentationController::class, 'store'])->name('representation.store');
 
-Route::get('/admin/review', [AdminController::class, 'getReview'])->name('admin.review');
+    Route::get('/representation/{id}', [RepresentationController::class, 'show'])->where('id', '[0-9]+')->name('representation.show');
 
-Route::post('/admin/review/validate/{id}', [AdminController::class, 'validatedReview'])->where('id', '[0-9]+')->name('admin.validatedreview');
+    Route::get('/admin/reservation', [AdminController::class, 'getReservation'])->name('admin.reservation');
 
-Route::post('/admin/review/unvalidate/{id}', [AdminController::class, 'unvalidatedReview'])->where('id', '[0-9]+')->name('admin.unvalidatedreview');
+    Route::delete('/admin/reservation/{id}', [AdminController::class, 'deleteReservation'])->where('id', '[0-9]+')->name('admin.deletereservation');
 
-Route::get('/admin/price', [PriceController::class, 'index'])->name('price.index');
+    Route::get('/admin/review', [AdminController::class, 'getReview'])->name('admin.review');
 
-Route::get('/price/create', [PriceController::class, 'create'])->name('price.create');
+    Route::post('/admin/review/validate/{id}', [AdminController::class, 'validatedReview'])->where('id', '[0-9]+')->name('admin.validatedreview');
 
-Route::post('/price', [PriceController::class, 'store'])->name('price.store');
+    Route::post('/admin/review/unvalidate/{id}', [AdminController::class, 'unvalidatedReview'])->where('id', '[0-9]+')->name('admin.unvalidatedreview');
 
-Route::delete('/admin/price/{id}', [PriceController::class, 'destroy'])->where('id', '[0-9]+')->name('price.delete');
+    Route::get('/admin/price', [PriceController::class, 'index'])->name('price.index');
 
-Route::get('/prices/{id}/edit', [PriceController::class, 'edit'])->name('price.edit');
+    Route::get('/price/create', [PriceController::class, 'create'])->name('price.create');
 
-Route::put('/prices/{id}', [PriceController::class, 'update'])->name('price.update');
+    Route::post('/price', [PriceController::class, 'store'])->name('price.store');
 
-Route::get('/artist/create', [ArtistController::class, 'create'])->name('artist.create');
+    Route::delete('/admin/price/{id}', [PriceController::class, 'destroy'])->where('id', '[0-9]+')->name('price.delete');
 
-Route::post('/artist', [ArtistController::class, 'store'])->name('artist.store');
+    Route::get('/prices/{id}/edit', [PriceController::class, 'edit'])->name('price.edit');
 
-Route::get('/artist/{id}', [ArtistController::class, 'show'])->where('id', '[0-9]+')->name('artist.show');
+    Route::put('/prices/{id}', [PriceController::class, 'update'])->name('price.update');
 
-Route::get('/artist/{id}/edit', [ArtistController::class, 'edit'])->where('id', '[0-9]+')->name('artist.edit');
+    Route::get('/artist/create', [ArtistController::class, 'create'])->name('artist.create');
 
-Route::put('/artist/{id}', [ArtistController::class, 'update'])->where('id', '[0-9]+')->name('artist.update');
+    Route::post('/artist', [ArtistController::class, 'store'])->name('artist.store');
 
-Route::delete('/artist/{id}', [ArtistController::class, 'delete'])->where('id', '[0-9]+')->name('artist.delete');
+    Route::get('/artist/{id}', [ArtistController::class, 'show'])->where('id', '[0-9]+')->name('artist.show');
 
-Route::get('/type', [TypeController::class, 'index'])->name('type.index');
+    Route::get('/artist/{id}/edit', [ArtistController::class, 'edit'])->where('id', '[0-9]+')->name('artist.edit');
 
-Route::get('/type/create', [TypeController::class, 'create'])->name('type.create');
+    Route::put('/artist/{id}', [ArtistController::class, 'update'])->where('id', '[0-9]+')->name('artist.update');
 
-Route::post('/type', [TypeController::class, 'store'])->name('type.store');
+    Route::delete('/artist/{id}', [ArtistController::class, 'delete'])->where('id', '[0-9]+')->name('artist.delete');
 
-Route::get('/type/{id}', [TypeController::class, 'show'])->where('id', '[0-9]+')->name('type.show');
+    Route::get('/type', [TypeController::class, 'index'])->name('type.index');
 
-Route::get('/type/{id}/edit', [TypeController::class, 'edit'])->where('id', '[0-9]+')->name('type.edit');
+    Route::get('/type/create', [TypeController::class, 'create'])->name('type.create');
 
-Route::put('/type/{id}', [TypeController::class, 'update'])->where('id', '[0-9]+')->name('type.update');
+    Route::post('/type', [TypeController::class, 'store'])->name('type.store');
 
-Route::delete('/type/{id}', [TypeController::class, 'destroy'])->where('id', '[0-9]+')->name('type.delete');
+    Route::get('/type/{id}', [TypeController::class, 'show'])->where('id', '[0-9]+')->name('type.show');
 
-Route::get('/locality', [LocalityController::class, 'index'])->name('locality.index');
+    Route::get('/type/{id}/edit', [TypeController::class, 'edit'])->where('id', '[0-9]+')->name('type.edit');
 
-Route::get('/locality/create', [LocalityController::class, 'create'])->name('locality.create');
+    Route::put('/type/{id}', [TypeController::class, 'update'])->where('id', '[0-9]+')->name('type.update');
 
-Route::post('/locality', [LocalityController::class, 'store'])->name('locality.store');
+    Route::delete('/type/{id}', [TypeController::class, 'destroy'])->where('id', '[0-9]+')->name('type.delete');
 
-Route::get('/locality/{id}', [LocalityController::class, 'show'])->where('id', '[0-9]+')->name('locality.show');
+    Route::get('/locality', [LocalityController::class, 'index'])->name('locality.index');
 
-Route::get('/locality/{id}/edit', [LocalityController::class, 'edit'])->where('id', '[0-9]+')->name('locality.edit');
+    Route::get('/locality/create', [LocalityController::class, 'create'])->name('locality.create');
 
-Route::put('/locality/{id}', [LocalityController::class, 'update'])->where('id', '[0-9]+')->name('locality.update');
+    Route::post('/locality', [LocalityController::class, 'store'])->name('locality.store');
 
-Route::delete('/locality/{id}', [LocalityController::class, 'delete'])->where('id', '[0-9]+')->name('locality.delete');
+    Route::get('/locality/{id}', [LocalityController::class, 'show'])->where('id', '[0-9]+')->name('locality.show');
 
-Route::get('/location', [LocationController::class, 'index'])->name('location.index');
+    Route::get('/locality/{id}/edit', [LocalityController::class, 'edit'])->where('id', '[0-9]+')->name('locality.edit');
 
-Route::get('/location/create', [LocationController::class, 'create'])->name('location.create');
+    Route::put('/locality/{id}', [LocalityController::class, 'update'])->where('id', '[0-9]+')->name('locality.update');
 
-Route::post('/location', [LocationController::class, 'store'])->name('location.store');
+    Route::delete('/locality/{id}', [LocalityController::class, 'delete'])->where('id', '[0-9]+')->name('locality.delete');
 
-Route::get('/location/{id}', [LocationController::class, 'show'])->where('id', '[0-9]+')->name('location.show');
+    Route::get('/location', [LocationController::class, 'index'])->name('location.index');
 
-Route::get('/location/{id}/edit', [LocationController::class, 'edit'])->where('id', '[0-9]+')->name('location.edit');
+    Route::get('/location/create', [LocationController::class, 'create'])->name('location.create');
 
-Route::put('/location/{id}', [LocationController::class, 'update'])->where('id', '[0-9]+')->name('location.update');
+    Route::post('/location', [LocationController::class, 'store'])->name('location.store');
 
-Route::delete('/location/{id}', [LocationController::class, 'delete'])->where('id', '[0-9]+')->name('location.delete');
+    Route::get('/location/{id}', [LocationController::class, 'show'])->where('id', '[0-9]+')->name('location.show');
 
-Route::get('/representation', [RepresentationController::class, 'index'])->name('representation.index');
+    Route::get('/location/{id}/edit', [LocationController::class, 'edit'])->where('id', '[0-9]+')->name('location.edit');
 
-Route::get('/representation/{id}/edit', [RepresentationController::class, 'edit'])->where('id', '[0-9]+')->name('representation.edit');
+    Route::put('/location/{id}', [LocationController::class, 'update'])->where('id', '[0-9]+')->name('location.update');
 
-Route::put('/representation/{id}', [RepresentationController::class, 'update'])->where('id', '[0-9]+')->name('representation.update');
+    Route::delete('/location/{id}', [LocationController::class, 'delete'])->where('id', '[0-9]+')->name('location.delete');
 
-Route::delete('/representation/{id}', [RepresentationController::class, 'destroy'])->where('id', '[0-9]+')->name('representation.destroy');
+    Route::get('/representation', [RepresentationController::class, 'index'])->name('representation.index');
 
-Route::get('/role', [RoleController::class, 'index'])->name('role.index');
+    Route::get('/representation/{id}/edit', [RepresentationController::class, 'edit'])->where('id', '[0-9]+')->name('representation.edit');
 
-Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
+    Route::put('/representation/{id}', [RepresentationController::class, 'update'])->where('id', '[0-9]+')->name('representation.update');
 
-Route::post('/role', [RoleController::class, 'store'])->name('role.store');
+    Route::delete('/representation/{id}', [RepresentationController::class, 'destroy'])->where('id', '[0-9]+')->name('representation.destroy');
 
-Route::get('/role/{id}', [RoleController::class, 'show'])->where('id', '[0-9]+')->name('role.show');
+    Route::get('/role', [RoleController::class, 'index'])->name('role.index');
 
-Route::get('/role/{id}/edit', [RoleController::class, 'edit'])->where('id', '[0-9]+')->name('role.edit');
+    Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
 
-Route::put('/role/{id}', [RoleController::class, 'update'])->where('id', '[0-9]+')->name('role.update');
+    Route::post('/role', [RoleController::class, 'store'])->name('role.store');
 
-Route::delete('/role/{id}', [RoleController::class, 'delete'])->where('id', '[0-9]+')->name('role.delete');
+    Route::get('/role/{id}', [RoleController::class, 'show'])->where('id', '[0-9]+')->name('role.show');
 
+    Route::get('/role/{id}/edit', [RoleController::class, 'edit'])->where('id', '[0-9]+')->name('role.edit');
 
+    Route::put('/role/{id}', [RoleController::class, 'update'])->where('id', '[0-9]+')->name('role.update');
 
-
+    Route::delete('/role/{id}', [RoleController::class, 'delete'])->where('id', '[0-9]+')->name('role.delete');
+});
 
 
 /*
