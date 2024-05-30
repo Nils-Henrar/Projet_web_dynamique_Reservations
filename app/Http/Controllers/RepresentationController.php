@@ -10,6 +10,7 @@ use App\Models\Price;
 use App\Models\Show;
 use App\Models\Location;
 use App\Http\Requests\RepresentationRequest;
+use Illuminate\Validation\ValidationException;
 
 class RepresentationController extends Controller
 {
@@ -30,7 +31,7 @@ class RepresentationController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {   
+    {
         $shows = Show::all();
         $locations = Location::all();
 
@@ -42,12 +43,12 @@ class RepresentationController extends Controller
      */
     public function store(RepresentationRequest $request)
     {
-         // Valider les données du formulaire
-        //  $validatedData = $request->validate([
-        //     'show_id' => 'required|exists:shows,id',  // L'ID du spectacle doit exister
-        //     'location_id' => 'nullable|exists:locations,id',  // L'ID du lieu peut être nul, mais doit exister s'il est fourni
-        //     'schedule' => 'nullable|date',  // 'when' doit être une date valide
-        // ]);
+        // Valider les données du formulaire
+        $validatedData = $request->validate([
+            'show_id' => 'required|exists:shows,id',  // L'ID du spectacle doit exister
+            'location_id' => 'nullable|exists:locations,id',  // L'ID du lieu peut être nul, mais doit exister s'il est fourni
+            'schedule' => 'nullable|date',  // 'schedule' doit être une date valide
+        ]);
 
         $validatedData = $request->validated();
 
@@ -56,9 +57,9 @@ class RepresentationController extends Controller
         $representation->show_id = $validatedData['show_id'];
         $representation->location_id = $validatedData['location_id'] ?? null;
         $representation->schedule = $validatedData['schedule'] ?? null;
-        
+
         $representation->save();  // Enregistrer dans la base de données
-        
+
         // Redirection après succès avec un message flash
         return redirect()->route('representation.index')->with('success', 'Représentation créée avec succès');
     }
@@ -103,7 +104,7 @@ class RepresentationController extends Controller
     public function update(RepresentationRequest $request, string $id)
     {
         try {
-        
+
             $validatedData = $request->validated();
 
             $representation = Representation::findOrFail($id);
@@ -126,11 +127,10 @@ class RepresentationController extends Controller
     {
 
         $representation = Representation::findOrFail($id);
-        
+
         $representation->delete();
 
         return redirect()->route('representation.index')->with('success', 'Représentation supprimée avec succès');
-
     }
 
     /**

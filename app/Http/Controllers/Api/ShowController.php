@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ShowResource;
 use App\Http\Resources\RepresentationResource;
 use App\Http\Resources\ReviewResource;
-
 use App\Models\Show;
-use App\Models\Review;
 use Illuminate\Support\Facades\DB;
 
 class ShowController extends Controller
