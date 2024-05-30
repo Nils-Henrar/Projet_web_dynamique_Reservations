@@ -186,6 +186,11 @@ Route::get('/show', [ShowController::class, 'index'])->name('show.index');
 
 Route::get('/show/{id}', [ShowController::class, 'show'])->where('id', '[0-9]+')->name('show.show');
 
+// utiliser pour le flux rss
+Route::get('/show/{id}/representation', [ShowController::class, 'representation'])->where('id', '[0-9]+')->name('representation_show');
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Reservation Routes
