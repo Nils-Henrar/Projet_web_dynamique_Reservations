@@ -115,19 +115,6 @@ class ReservationController extends Controller
         ]);
     }
 
-    public function edit(string $id)
-    {
-        //
-
-    }
-
-    public function update(Request $request, string $id)
-    {
-        // Validation des données du formulaire
-
-
-    }
-
     public function destroy(string $id)
     {
         //

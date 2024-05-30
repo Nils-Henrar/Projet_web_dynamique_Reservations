@@ -11,7 +11,6 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\RepresentationController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PriceController;
 
@@ -99,8 +98,6 @@ Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(functi
 
     Route::post('/artist', [ArtistController::class, 'store'])->name('artist.store');
 
-    Route::get('/artist/{id}', [ArtistController::class, 'show'])->where('id', '[0-9]+')->name('artist.show');
-
     Route::get('/artist/{id}/edit', [ArtistController::class, 'edit'])->where('id', '[0-9]+')->name('artist.edit');
 
     Route::put('/artist/{id}', [ArtistController::class, 'update'])->where('id', '[0-9]+')->name('artist.update');
@@ -170,17 +167,6 @@ Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(functi
     Route::put('/role/{id}', [RoleController::class, 'update'])->where('id', '[0-9]+')->name('role.update');
 
     Route::delete('/role/{id}', [RoleController::class, 'delete'])->where('id', '[0-9]+')->name('role.delete');
-
-
-    Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation.index');
-
-    Route::get('/reservation/{id}', [ReservationController::class, 'show'])->where('id', '[0-9]+')->name('reservation.show');
-
-    Route::get('/reservation/{id}/edit', [ReservationController::class, 'edit'])->where('id', '[0-9]+')->name('reservation.edit');
-
-    Route::put('/reservation/{id}', [ReservationController::class, 'update'])->where('id', '[0-9]+')->name('reservation.update');
-
-    Route::delete('/reservation/{id}', [ReservationController::class, 'delete'])->where('id', '[0-9]+')->name('reservation.delete');
 });
 
 
