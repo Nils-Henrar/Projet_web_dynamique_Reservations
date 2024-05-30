@@ -11,6 +11,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\RepresentationController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PriceController;
 
@@ -167,6 +168,8 @@ Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(functi
     Route::put('/role/{id}', [RoleController::class, 'update'])->where('id', '[0-9]+')->name('role.update');
 
     Route::delete('/role/{id}', [RoleController::class, 'delete'])->where('id', '[0-9]+')->name('role.delete');
+
+    Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation.index');
 });
 
 
