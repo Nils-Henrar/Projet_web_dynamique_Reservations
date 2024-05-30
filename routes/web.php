@@ -29,7 +29,7 @@ use App\Http\Controllers\PriceController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 /*
@@ -170,6 +170,17 @@ Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(functi
     Route::put('/role/{id}', [RoleController::class, 'update'])->where('id', '[0-9]+')->name('role.update');
 
     Route::delete('/role/{id}', [RoleController::class, 'delete'])->where('id', '[0-9]+')->name('role.delete');
+
+
+    Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation.index');
+
+    Route::get('/reservation/{id}', [ReservationController::class, 'show'])->where('id', '[0-9]+')->name('reservation.show');
+
+    Route::get('/reservation/{id}/edit', [ReservationController::class, 'edit'])->where('id', '[0-9]+')->name('reservation.edit');
+
+    Route::put('/reservation/{id}', [ReservationController::class, 'update'])->where('id', '[0-9]+')->name('reservation.update');
+
+    Route::delete('/reservation/{id}', [ReservationController::class, 'delete'])->where('id', '[0-9]+')->name('reservation.delete');
 });
 
 
@@ -200,35 +211,29 @@ Route::get('/show/{id}/representation', [ShowController::class, 'representation'
 |
 */
 
-Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation.index');
-
-Route::get('/reservation/{id}', [ReservationController::class, 'show'])->where('id', '[0-9]+')->name('reservation.show');
-
-Route::get('/reservation/{id}/edit', [ReservationController::class, 'edit'])->where('id', '[0-9]+')->name('reservation.edit');
-
-Route::put('/reservation/{id}', [ReservationController::class, 'update'])->where('id', '[0-9]+')->name('reservation.update');
-
-Route::delete('/reservation/{id}', [ReservationController::class, 'delete'])->where('id', '[0-9]+')->name('reservation.delete');
-
-// Route permettant d'afficher la page de réservation d'une représentation
-Route::get('/representation/{id}/book', [RepresentationController::class, 'book'])->where('id', '[0-9]+')->name('representation.book');
-
-// Route permettant de créer un paiement
-Route::post('/create-payment-checkout', [ReservationController::class, 'store'])->name('create-payment-checkout');
-
-// Route permettant de confirmer une réservation
-Route::get('/reservation/{id}/confirmation', [ReservationController::class, 'confirmation'])->where('id', '[0-9]+')->name('reservation.confirmation');
-
-// Route permettant d'annuler une réservation
-Route::get('/reservation/{id}/cancel', [ReservationController::class, 'cancel'])->where('id', '[0-9]+')->name('reservation.cancel');
-
-Route::get('/my-reservations', [ReservationController::class, 'myReservations'])->name('my-reservations');
 
 
 
 
 
 
+Route::middleware([\App\Http\Middleware\IsMemberMiddleware::class])->group(function () {
+
+
+    Route::get('/my-reservations', [ReservationController::class, 'myReservations'])->name('my-reservations');
+    // Route permettant d'afficher la page de réservation d'une représentation
+    Route::get('/representation/{id}/book', [RepresentationController::class, 'book'])->where('id', '[0-9]+')->name('representation.book');
+
+    // Route permettant de créer un paiement
+    Route::post('/create-payment-checkout', [ReservationController::class, 'store'])->name('create-payment-checkout');
+
+
+    // Route permettant de confirmer une réservation
+    Route::get('/reservation/{id}/confirmation', [ReservationController::class, 'confirmation'])->where('id', '[0-9]+')->name('reservation.confirmation');
+
+    // Route permettant d'annuler une réservation
+    Route::get('/reservation/{id}/cancel', [ReservationController::class, 'cancel'])->where('id', '[0-9]+')->name('reservation.cancel');
+});
 
 /*
 |--------------------------------------------------------------------------
