@@ -316,9 +316,10 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'profile',
-            'url' => '/profile',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Accueil',
+            'url' => '/home',
+            // icone maison
+            'icon' => 'fas fa-fw fa-home',
         ],
         ['header' => 'RESERVATION'],
         [
