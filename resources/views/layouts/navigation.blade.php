@@ -5,43 +5,51 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    <a href="{{ route('home') }}">
+                        <img src="{{ asset('images/logo-reservation.png') }}" alt="Logo" style="width: 100px;">
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link> -->
+
+                    @if (Auth::user() && Auth::user()->roles->contains('role', 'admin'))
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @endif
 
                     <x-nav-link :href="route('show.index')" :active="request()->routeIs('show.index')">
                         {{ __('Spectacles') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('artist.index')" :active="request()->routeIs('artist.index')">
-                        {{ __('Artistes') }}
-                    </x-nav-link>
+
 
                     <!-- all reservations
                     <x-nav-link :href="route('reservation.index')" :active="request()->routeIs('reservation.index')">
                         {{ __('Réservations(Admin)') }}
                     </x-nav-link> -->
-
+                    @if (Auth::user() && Auth::user()->roles->contains('role', 'member'))
                     <x-nav-link :href="route('my-reservations')" :active="request()->routeIs('my-reservations')">
                         {{ __('Mes réservations') }}
                     </x-nav-link>
-
+                    @endif
 
                 </div>
+
             </div>
 
             <!-- Settings Dropdown -->
+
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                @auth
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+
                             <div>{{ Auth::user()->login }}</div>
 
                             <div class="ms-1">
@@ -68,7 +76,18 @@
                         </form>
                     </x-slot>
                 </x-dropdown>
+                @endauth
+                @guest
+                <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                    {{ __('Se connecter') }}
+                </x-nav-link>
+
+                <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                    {{ __('S\'inscrire') }}
+                </x-nav-link>
+                @endguest
             </div>
+
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
@@ -81,7 +100,7 @@
             </div>
         </div>
     </div>
-
+    @auth
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
@@ -114,4 +133,5 @@
             </div>
         </div>
     </div>
+    @endauth
 </nav>
