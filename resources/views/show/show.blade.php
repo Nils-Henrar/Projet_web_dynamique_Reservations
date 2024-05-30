@@ -64,9 +64,9 @@
                 <th class="text-left">Date</th>
                 <th class="text-left">Heure</th>
                 <th class="text-left">Lieu</th>
-                @auth
+                @if(Auth::check() && auth()->user()->roles->contains('role', 'member'))
                 <th class="text-right"></th>
-                @endauth
+                @endif
             </tr>
         <tbody>
             @foreach ($show->representations as $representation)
@@ -83,11 +83,11 @@
                     à déterminer
                     @endif
                 </td>
-                @auth
+                @if(Auth::check() && auth()->user()->roles->contains('role', 'member'))
                 <td class="text-right">
                     <a href="{{ route('representation.book', $representation->id) }}" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-1 px-4 rounded">Réserver</a>
                 </td>
-                @endauth
+                @endif
 
             </tr>
             @endforeach
